@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Behat;
 
 use App\Entity\Post;
-use App\Repository\PostRepository;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\BrowserKit\AbstractBrowser;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -15,14 +15,14 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 final class CommentContext implements Context
 {
     private $browser;
-    private $postRepository;
+    private $managerRegistry;
     private $router;
     private $csrfTokenManager;
 
-    public function __construct(AbstractBrowser $browser, PostRepository $postRepository, RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager)
+    public function __construct(AbstractBrowser $browser, ManagerRegistry $managerRegistry, RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager)
     {
         $this->browser = $browser;
-        $this->postRepository = $postRepository;
+        $this->managerRegistry = $managerRegistry;
         $this->router = $router;
         $this->csrfTokenManager = $csrfTokenManager;
     }
@@ -33,7 +33,7 @@ final class CommentContext implements Context
     public function iPublishACommentToThePostWithBody(string $post, PyStringNode $body): void
     {
         /** @var Post $post */
-        $post = $this->postRepository->findOneBy(['title' => $post]);
+        $post = $this->managerRegistry->getRepository(Post::class)->findOneBy(['title' => $post]);
         if (null === $post) {
             throw new \InvalidArgumentException(sprintf('Post "%s" not found', $post));
         }

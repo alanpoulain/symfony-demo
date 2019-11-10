@@ -4,6 +4,7 @@ default:
             contexts:
                 - App\Tests\Behat\CommentContext
                 - App\Tests\Behat\DemoContext
+                - App\Tests\Behat\DoctrineContext
                 - App\Tests\Behat\MailerContext
                 - App\Tests\Behat\ProfilerContext
                 - App\Tests\Behat\UserContext
