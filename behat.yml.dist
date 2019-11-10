@@ -2,7 +2,11 @@ default:
     suites:
         default:
             contexts:
+                - App\Tests\Behat\CommentContext
                 - App\Tests\Behat\DemoContext
+                - App\Tests\Behat\MailerContext
+                - App\Tests\Behat\ProfilerContext
+                - App\Tests\Behat\UserContext
 
     extensions:
         FriendsOfBehat\SymfonyExtension: null

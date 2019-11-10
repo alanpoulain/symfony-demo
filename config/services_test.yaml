@@ -2,6 +2,19 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
+        bind:
+            $browser: '@app.test.browser'
 
     App\Tests\Behat\:
         resource: '../tests/Behat/*'
+
+    app.test.browser:
+        class: Symfony\Component\HttpKernel\HttpKernelBrowser
+
+    App\Tests\Behat\ProfilerContext:
+        arguments:
+            $profiler: '@profiler'
+
+    App\Tests\Behat\MailerContext:
+        arguments:
+            $messageDataCollector: '@mailer.data_collector'

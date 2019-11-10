@@ -39,6 +39,16 @@ class AppFixtures extends Fixture
         $this->loadPosts($manager);
     }
 
+    public function getUserData(): array
+    {
+        return [
+            // $userData = [$fullname, $username, $password, $email, $roles];
+            ['Jane Doe', 'jane_admin', 'kitten', 'jane_admin@symfony.com', ['ROLE_ADMIN']],
+            ['Tom Doe', 'tom_admin', 'kitten', 'tom_admin@symfony.com', ['ROLE_ADMIN']],
+            ['John Doe', 'john_user', 'kitten', 'john_user@symfony.com', ['ROLE_USER']],
+        ];
+    }
+
     private function loadUsers(ObjectManager $manager): void
     {
         foreach ($this->getUserData() as [$fullname, $username, $password, $email, $roles]) {
@@ -94,16 +104,6 @@ class AppFixtures extends Fixture
         }
 
         $manager->flush();
-    }
-
-    private function getUserData(): array
-    {
-        return [
-            // $userData = [$fullname, $username, $password, $email, $roles];
-            ['Jane Doe', 'jane_admin', 'kitten', 'jane_admin@symfony.com', ['ROLE_ADMIN']],
-            ['Tom Doe', 'tom_admin', 'kitten', 'tom_admin@symfony.com', ['ROLE_ADMIN']],
-            ['John Doe', 'john_user', 'kitten', 'john_user@symfony.com', ['ROLE_USER']],
-        ];
     }
 
     private function getTagData(): array
